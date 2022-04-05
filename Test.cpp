@@ -91,10 +91,28 @@ TEST_CASE("Good input"){
     CHECK((mat18*=7) == mat19);
     CHECK((mat18*=(-1)) == mat20);
 
+    // matrix mult
+    vector<double> vec21 = {3, -1, 0.7, 1, 1, 0, 0, 3, 3.6};
+    vector<double> vec22 = {20.1, 1, 0};
+    Matrix mat21(vec21, 3, 3);
+    Matrix mat22(vec22, 3, 1);
+    vector<double> vec23 = {59.3, 21.1, 3};
+    Matrix mat23(vec23, 3, 1);
+    CHECK((mat21*mat22) == mat23);
+
+    // unari operators
+    vector<double> vec24 = {7, 7, 7, 7, 7, 7, 7, 7, 7};
+    vector<double> vec25 = {7, 7, 7, 7, 7, 7, 7, 7, 7};
+    vector<double> vec26 = {-7, -7, -7, -7, -7, -7, -7, -7, -7};
+    Matrix mat24(vec24, 3, 3);
+    Matrix mat25(vec25, 3, 3);
+    Matrix mat26(vec26, 3, 3);
+    CHECK(+mat24==mat25);
+    CHECK(-mat25==mat26);
 }
 
 
-TEST_CASE("Bad input"){
+TEST_CASE("Bad input and wrong checks"){
 
     //compering that will fail:
     vector<double> v1 = {1, 0, 0, 0, 1, 0, 0, 0, 1};
@@ -105,7 +123,7 @@ TEST_CASE("Bad input"){
 
     vector<double> v3 = {4, 0, 0, 0, 4, 0, 0, 0, 4};
     Matrix m3(v3, 3, 3);
-    CHECK_FALSE(m1 == m3);
+    CHECK_FALSE(m1 == m3); // m1 = 3, m3 = 12
     CHECK_FALSE(m1 >= m3);
     CHECK_FALSE(m1*2 == m3);
 
@@ -118,7 +136,7 @@ TEST_CASE("Bad input"){
     vector<double> v4 = {1, 0, 0, 1};
     Matrix m6(v4, 2, 2);
 
-    // the size of m1 is not equal to the size of m6, any of this function will fail:
+    // the size of m1 is not equal to the size of m6, any of this function will fail (because m1:3*3 and m6:2*2) :
     CHECK_FALSE(m6 == m1); 
     CHECK_FALSE(m6 != m1); 
     CHECK_FALSE(m6 <= m1);
